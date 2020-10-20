@@ -1,0 +1,11 @@
+{
+  "name": "pdf-thumbnails",
+  "version": "1.0.0",
+  "main": "src/app.js",
+  "repository": "https://www.github.com/tind/pdf-thumbnails",
+  "license": "MIT",
+  "dependencies": {
+    "canvas": "^2.6.1",
+    "pdfjs-dist": "^2.5.207"
+  }
+}
