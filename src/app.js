@@ -9,7 +9,7 @@ function doProcessing() {
         let config
 
         try {
-            const contents = readFileSync(process.stdin.fd, "utf-8");
+            const contents = readFileSync(0, "utf-8");
             config = JSON.parse(contents);
         } catch (error) {
             reject(error)
