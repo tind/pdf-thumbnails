@@ -15,7 +15,7 @@ function doProcessing() {
             reject(error)
         }
 
-        const processes = config.jobs.map(({sourcePath, outputPath, page = 1, maxWidth = 300}) => {
+        const processes = config.jobs.map(({sourcePath, outputPath, page = 1, maxWidth = 300, quality = 1.0}) => {
             const result = {
                 sourcePath: sourcePath,
                 outputPath: outputPath
@@ -44,7 +44,7 @@ function doProcessing() {
                 
                         const renderTask = page.render(renderContext);
                         renderTask.promise.then(() => {
-                            const image = canvasAndContext.canvas.createJPEGStream();
+                            const image = canvasAndContext.canvas.createJPEGStream({ quality: quality });
                             const output = createWriteStream(outputPath);
 
                             image.pipe(output);
