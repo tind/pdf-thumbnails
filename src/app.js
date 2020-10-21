@@ -81,8 +81,6 @@ function doProcessing() {
     });
 }
 
-let input
-
 doProcessing()
     .then(res => {
         process.stdout.write(JSON.stringify(res));
