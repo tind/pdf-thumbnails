@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { readFileSync, createWriteStream } = require("fs");
 const { promisify } = require("util");
 const pdfjsLib = require("pdfjs-dist/es5/build/pdf.js");
