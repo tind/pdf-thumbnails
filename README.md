@@ -1,5 +1,7 @@
 # TIND PDF Thumbnails
 
+[<img src="https://img.shields.io/github/workflow/status/tind/pdf-thumbnails/build_and_test/master?style=flat-square">](https://github.com/tind/pdf-thumbnails/actions?query=workflow%3Abuild_and_test)
+
 TIND PDF Thumbnails is a Node.js program to generate thumbnails from PDF files. It leverages the battle tested [PDF.js](https://mozilla.github.io/pdf.js/) library.
 
 ## Usage
