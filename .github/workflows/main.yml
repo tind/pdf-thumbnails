@@ -27,4 +27,4 @@ jobs:
       - name: Install npm dependencies
         run: npm install --production=false
       - name: Run tests
-        run: npm mocha
+        run: npm test
