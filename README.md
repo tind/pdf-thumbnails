@@ -6,7 +6,7 @@ TIND PDF Thumbnails is a Node.js program to generate thumbnails from PDF files. 
 
 ## Usage
 
-Clone the repository and run `yarn install` to fetch dependencies. Run the program with `node src/app.js`. The program reads a config object from stdin which describes the processing:
+Clone the repository and run `npm install` to fetch dependencies. Run the program with `node src/app.js`. The program reads a config object from stdin which describes the processing:
 
 ```json
 {
