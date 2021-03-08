@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const { readFile, writeFile } = require("fs/promises");
+const { readFile, writeFile } = require("fs").promises;
 const { basename, join } = require("path");
 const { getThumbnail, NodeCanvasFactory } = require("./lib");
 
