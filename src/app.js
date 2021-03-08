@@ -1,30 +1,51 @@
 #!/usr/bin/env node
 
-const { readFileSync } = require("fs");
-const { processJobs } = require("./processJobs");
+const { readFile, writeFile } = require("fs/promises");
+const { basename, join } = require("path");
+const { getThumbnail, NodeCanvasFactory } = require("./lib");
 
-const env = process.env.NODE_ENV || "development";
+const { Command, InvalidOptionArgumentError } = require('commander');
 
-async function doProcessing() {
-    let config = { jobs: [] };
+const program = new Command();
 
-    try {
-        const contents = readFileSync(0, "utf-8");
-        config = {...config, ...JSON.parse(contents)};
-    } catch {
-        return { success: false, message: "Could not parse config object", ...config };
+function _parseInt(value, dummyPrevious) {
+    const parsedValue = parseInt(value, 10);
+    if (isNaN(parsedValue)) {
+        throw new InvalidOptionArgumentError('Not a number.');
     }
-
-    const results = await processJobs(config);
-
-    return {
-        success: results.length ? results.every(r => r.success) : false,
-        values: results
-    };
+    return parsedValue;
 }
 
-doProcessing()
-    .then(res => {
-        process.stdout.write(JSON.stringify(res, null, 2));
-        process.exit(res.success ? 0 : 1);
-    });
+function _parseFloat(value, dummyPrevious) {
+    const parsedValue = parseFloat(value);
+    if (isNaN(parsedValue)) {
+        throw new InvalidOptionArgumentError("Not a float.");
+    }
+    return parsedValue;
+}
+
+program
+    .name("pdf-thumbnails")
+    .description("Generate image thumbnails for PDFs")
+    .requiredOption("-o, --output <dir>", "output directory")
+    .option("-p, --pagenum <pagenum>", "page number", _parseInt, 1)
+    .option("-w, --max-width <width>", "maximum width", _parseInt, 300)
+    .option("-q, --quality <quality>", "jpeg quality", _parseFloat, 1.0)
+    .arguments("<file...>")
+    .action(async (files, options, command) => {
+        const canvasFactory = new NodeCanvasFactory();
+        try {
+            for (const file of files) {
+                const outputPath = join(options.output, basename(file, ".pdf") + ".jpg");
+                const contents = await readFile(file);
+                const jpegBuffer = await getThumbnail(contents, options.pagenum, options.maxWidth, options.quality, canvasFactory);
+
+                await writeFile(outputPath, jpegBuffer);
+            }
+        } catch (error) {
+            console.error(error);
+            process.exit(1)
+        }
+        process.exit(0);
+    })
+    .parseAsync();

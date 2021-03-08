@@ -1,21 +1,13 @@
 const assert = require("assert");
+const { readFile } = require("fs/promises");
 
-const { processJobs } = require("../src/processJobs");
+const { getThumbnail } = require("../src/lib");
 
 describe("ProcessFeaturedArticle", function() {
-    const config = {
-        jobs: [
-            {
-                sourcePath: "test/Herja.pdf",
-                outputPath: "test/Herja.jpg"
-            }
-        ]
-    }
-
     it("should successfully generate from wikipedia featured article", async function() {
-        const results = await processJobs(config);
-        for (const result of results) {
-            assert.ok(result.success);
-        }
-    })
-})
+        const data = await readFile("test/Herja.pdf");
+        const jpegBuffer = await getThumbnail(data);
+
+        assert.strictEqual(jpegBuffer.length, 49404);
+    });
+});

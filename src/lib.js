@@ -1,5 +1,7 @@
 const assert = require("assert").strict;
+
 const Canvas = require("canvas");
+const pdfjsLib = require("pdfjs-dist/es5/build/pdf.js");
 
 /* Largely copied from https://github.com/mozilla/pdf.js/blob/55f55f58594b9a6947fecaabf8ef4e3b02002023/examples/node/pdf2png/pdf2png.js#L20 */
 class NodeCanvasFactory {
@@ -32,4 +34,29 @@ class NodeCanvasFactory {
     }
 }
 
-module.exports = { NodeCanvasFactory };
+async function getThumbnail(data, pageNum = 1, maxWidth = 300, quality = 1.0, canvasFactory = new NodeCanvasFactory()) {
+    const loadingTask = pdfjsLib.getDocument({data: data});
+    const document = await loadingTask.promise;
+    const page = await document.getPage(pageNum);
+
+    let viewport = page.getViewport({ scale: 1.0 });
+    const scale = viewport.width < maxWidth ? 1.0 : maxWidth / viewport.width;
+    viewport = page.getViewport({ scale: scale });
+
+    const canvasAndContext = canvasFactory.create(viewport.width, viewport.height);
+    const renderContext = {
+        canvasContext: canvasAndContext.context,
+        viewport: viewport,
+        canvasFactory: canvasFactory
+    };
+
+    const renderTask = page.render(renderContext);
+    await renderTask.promise;
+
+    return canvasAndContext.canvas.toBuffer("image/jpeg", { quality: quality });
+}
+
+module.exports = {
+    NodeCanvasFactory,
+    getThumbnail
+}
