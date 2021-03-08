@@ -1,5 +1,5 @@
 const assert = require("assert");
-const { readFile } = require("fs/promises");
+const { readFile } = require("fs").promises;
 
 const { getThumbnail } = require("../src/lib");
 
