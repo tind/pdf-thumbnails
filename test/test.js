@@ -8,6 +8,6 @@ describe("ProcessFeaturedArticle", function() {
         const data = await readFile("test/Herja.pdf");
         const jpegBuffer = await getThumbnail(data);
 
-        assert.strictEqual(jpegBuffer.length, 49404);
+        assert.strictEqual(jpegBuffer.length, 50627);
     });
 });

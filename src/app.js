@@ -29,7 +29,7 @@ program
     .description("Generate image thumbnails for PDFs")
     .requiredOption("-o, --output <dir>", "output directory")
     .option("-p, --pagenum <pagenum>", "page number", _parseInt, 1)
-    .option("-w, --max-width <width>", "maximum width", _parseInt, 300)
+    .option("-w, --width <width>", "width", _parseInt, 300)
     .option("-q, --quality <quality>", "jpeg quality", _parseFloat, 1.0)
     .arguments("<file...>")
     .action(async (files, options, command) => {
@@ -38,7 +38,7 @@ program
             for (const file of files) {
                 const outputPath = join(options.output, basename(file, ".pdf") + ".jpg");
                 const contents = await readFile(file);
-                const jpegBuffer = await getThumbnail(contents, options.pagenum, options.maxWidth, options.quality, canvasFactory);
+                const jpegBuffer = await getThumbnail(contents, options.pagenum, options.width, options.quality, canvasFactory);
 
                 await writeFile(outputPath, jpegBuffer);
             }
