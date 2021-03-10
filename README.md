@@ -16,7 +16,7 @@ Generate image thumbnails for PDFs
 Options:
   -o, --output <dir>       output directory
   -p, --pagenum <pagenum>  page number (default: 1)
-  -w, --max-width <width>  maximum width (default: 300)
+  -w, --width <width>      width (default: 300)
   -q, --quality <quality>  jpeg quality (default: 1)
   -h, --help               display help for command
 ```

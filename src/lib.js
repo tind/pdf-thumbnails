@@ -34,13 +34,13 @@ class NodeCanvasFactory {
     }
 }
 
-async function getThumbnail(data, pageNum = 1, maxWidth = 300, quality = 1.0, canvasFactory = new NodeCanvasFactory()) {
+async function getThumbnail(data, pageNum = 1, width = 300, quality = 1.0, canvasFactory = new NodeCanvasFactory()) {
     const loadingTask = pdfjsLib.getDocument({data: data});
     const document = await loadingTask.promise;
     const page = await document.getPage(pageNum);
 
     let viewport = page.getViewport({ scale: 1.0 });
-    const scale = viewport.width < maxWidth ? 1.0 : maxWidth / viewport.width;
+    const scale = width / viewport.width;
     viewport = page.getViewport({ scale: scale });
 
     const canvasAndContext = canvasFactory.create(viewport.width, viewport.height);
@@ -53,7 +53,7 @@ async function getThumbnail(data, pageNum = 1, maxWidth = 300, quality = 1.0, ca
     const renderTask = page.render(renderContext);
     await renderTask.promise;
 
-    return canvasAndContext.canvas.toBuffer("image/jpeg", { quality: quality });
+    return canvasAndContext.canvas.toBuffer("image/jpeg", { quality: quality, chromaSubsampling: false });
 }
 
 module.exports = {
