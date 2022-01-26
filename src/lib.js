@@ -1,7 +1,7 @@
 const assert = require("assert").strict;
 
 const Canvas = require("canvas");
-const pdfjsLib = require("pdfjs-dist/es5/build/pdf.js");
+const pdfjsLib = require("pdfjs-dist/legacy/build/pdf.js");
 
 /* Largely copied from https://github.com/mozilla/pdf.js/blob/55f55f58594b9a6947fecaabf8ef4e3b02002023/examples/node/pdf2png/pdf2png.js#L20 */
 class NodeCanvasFactory {
