@@ -34,8 +34,8 @@ class NodeCanvasFactory {
     }
 }
 
-async function getThumbnail(data, pageNum = 1, width = 300, quality = 1.0, canvasFactory = new NodeCanvasFactory()) {
-    const loadingTask = pdfjsLib.getDocument({data: data});
+async function getThumbnail(data, pageNum = 1, width = 300, quality = 1.0, standardFonts = '/tmp/fonts/', canvasFactory = new NodeCanvasFactory()) {
+    const loadingTask = pdfjsLib.getDocument({data: data, standardFontDataUrl: standardFonts});
     const document = await loadingTask.promise;
     const page = await document.getPage(pageNum);
 

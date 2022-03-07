@@ -31,6 +31,7 @@ program
     .option("-p, --pagenum <pagenum>", "page number", _parseInt, 1)
     .option("-w, --width <width>", "width", _parseInt, 300)
     .option("-q, --quality <quality>", "jpeg quality", _parseFloat, 1.0)
+    .option("-F, --standard-fonts <dir>", "standard fonts", "/tmp/fonts/")
     .arguments("<file...>")
     .action(async (files, options, command) => {
         const canvasFactory = new NodeCanvasFactory();
@@ -38,7 +39,7 @@ program
             for (const file of files) {
                 const outputPath = join(options.output, basename(file, ".pdf") + ".jpg");
                 const contents = await readFile(file);
-                const jpegBuffer = await getThumbnail(contents, options.pagenum, options.width, options.quality, canvasFactory);
+                const jpegBuffer = await getThumbnail(contents, options.pagenum, options.width, options.quality, options.standardFonts, canvasFactory);
 
                 await writeFile(outputPath, jpegBuffer);
             }
