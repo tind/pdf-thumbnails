@@ -20,3 +20,10 @@ Options:
   -q, --quality <quality>  jpeg quality (default: 1)
   -h, --help               display help for command
 ```
+
+## Test locally
+```shell
+node src/app.js -o a/ -F <STANDARD FONTs> test/Herja.pdf
+
+# example: node src/app.js -o a/ -F /Users/arfat/Desktop/pdf-thumbnails/node_modules/pdfjs-dist/standard_fonts/ test/Herja.pdf
+```
