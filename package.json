@@ -5,12 +5,13 @@
    "repository": "https://www.github.com/tind/pdf-thumbnails",
    "license": "MIT",
    "dependencies": {
-      "canvas": "~2.9.0",
-      "commander": "~9.0.0",
-      "pdfjs-dist": "~2.13.216"
+      "canvas": "^2.11.0",
+      "commander": "~10.0.0",
+      "pdfjs-dist": "~3.3.122"
    },
    "devDependencies": {
-      "mocha": "~9.2.0"
+      "eslint": "^8.33.0",
+      "mocha": "^10.2.0"
    },
    "scripts": {
       "test": "mocha"
