@@ -1,10 +1,12 @@
 #!/usr/bin/env node
 
-const { readFile, writeFile } = require("fs").promises;
-const { basename, join } = require("path");
-const { getThumbnail, NodeCanvasFactory } = require("./lib");
+import { readFile, writeFile } from "fs/promises";
 
-const { Command, InvalidOptionArgumentError } = require("commander");
+import { basename, join } from "path";
+
+import { getThumbnail, NodeCanvasFactory } from "./lib.js";
+
+import { Command, InvalidOptionArgumentError } from "commander";
 
 const program = new Command();
 
@@ -37,19 +39,9 @@ program
     const canvasFactory = new NodeCanvasFactory();
     try {
       for (const file of files) {
-        const outputPath = join(
-          options.output,
-          basename(file, ".pdf") + ".jpg"
-        );
+        const outputPath = join(options.output, basename(file, ".pdf") + ".jpg");
         const contents = await readFile(file);
-        const jpegBuffer = await getThumbnail(
-          contents,
-          options.pagenum,
-          options.width,
-          options.quality,
-          options.standardFonts,
-          canvasFactory
-        );
+        const jpegBuffer = await getThumbnail(new Uint8Array(contents), options.pagenum, options.width, options.quality, options.standardFonts, canvasFactory);
 
         await writeFile(outputPath, jpegBuffer);
       }

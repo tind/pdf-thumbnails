@@ -1,10 +1,8 @@
-const assert = require("assert").strict;
+import assert from "assert";
 
-const Canvas = require("canvas");
-const pdfjsLib = require("pdfjs-dist/legacy/build/pdf.js");
+import Canvas from "canvas";
 
-// todo: Use this once Node.js is upgraded to 16
-// const pdfjsLib = require('pdfjs-dist')
+import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.mjs";
 
 /* Largely copied from https://github.com/mozilla/pdf.js/blob/55f55f58594b9a6947fecaabf8ef4e3b02002023/examples/node/pdf2png/pdf2png.js#L20 */
 class NodeCanvasFactory {
@@ -37,14 +35,7 @@ class NodeCanvasFactory {
   }
 }
 
-async function getThumbnail(
-  data,
-  pageNum = 1,
-  width = 300,
-  quality = 1.0,
-  standardFonts = "/tmp/fonts/",
-  canvasFactory = new NodeCanvasFactory()
-) {
+async function getThumbnail(data, pageNum = 1, width = 300, quality = 1.0, standardFonts = "/tmp/fonts/", canvasFactory = new NodeCanvasFactory()) {
   const loadingTask = pdfjsLib.getDocument({
     data: data,
     standardFontDataUrl: standardFonts,
@@ -56,10 +47,7 @@ async function getThumbnail(
   const scale = width / viewport.width;
   viewport = page.getViewport({ scale: scale });
 
-  const canvasAndContext = canvasFactory.create(
-    viewport.width,
-    viewport.height
-  );
+  const canvasAndContext = canvasFactory.create(viewport.width, viewport.height);
   const renderContext = {
     canvasContext: canvasAndContext.context,
     viewport: viewport,
@@ -75,7 +63,4 @@ async function getThumbnail(
   });
 }
 
-module.exports = {
-  NodeCanvasFactory,
-  getThumbnail,
-};
+export { NodeCanvasFactory, getThumbnail };
