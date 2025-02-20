@@ -1,13 +1,12 @@
 {
    "name": "pdf-thumbnails",
-   "version": "0.7.0",
+   "version": "0.8.0",
    "main": "src/app.js",
    "repository": "https://www.github.com/tind/pdf-thumbnails",
    "license": "MIT",
    "dependencies": {
-      "canvas": "^2.11.0",
       "commander": "~10.0.0",
-      "pdfjs-dist": "^4.6.82"
+      "pdfjs-dist": "^4.10.38"
    },
    "devDependencies": {
       "eslint": "^8.33.0",

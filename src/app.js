@@ -4,7 +4,7 @@ import { readFile, writeFile } from "fs/promises";
 
 import { basename, join } from "path";
 
-import { getThumbnail, NodeCanvasFactory } from "./lib.js";
+import { getThumbnail } from "./lib.js";
 
 import { Command, InvalidOptionArgumentError } from "commander";
 
@@ -36,12 +36,11 @@ program
   .option("-F, --standard-fonts <dir>", "standard fonts", "/tmp/fonts/")
   .arguments("<file...>")
   .action(async (files, options, command) => {
-    const canvasFactory = new NodeCanvasFactory();
     try {
       for (const file of files) {
         const outputPath = join(options.output, basename(file, ".pdf") + ".jpg");
         const contents = await readFile(file);
-        const jpegBuffer = await getThumbnail(new Uint8Array(contents), options.pagenum, options.width, options.quality, options.standardFonts, canvasFactory);
+        const jpegBuffer = await getThumbnail(new Uint8Array(contents), options.pagenum, options.width, options.quality, options.standardFonts);
 
         await writeFile(outputPath, jpegBuffer);
       }

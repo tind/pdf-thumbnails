@@ -18,6 +18,6 @@ describe("ProcessFeaturedArticle", function () {
 
     await writeFile(path.join(__dirname, "thumbnail.jpg"), jpegBuffer);
 
-    assert.strictEqual(jpegBuffer.length, 51133);
+    assert.strictEqual(jpegBuffer.length, 26751);
   });
 });
